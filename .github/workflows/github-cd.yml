@@ -22,15 +22,3 @@ jobs:
 
       - name: Push Docker Image
         run: docker push tranngobichdu/toeic-learning-website:v1
-
-      - name: SSH into the server and deploy Docker
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 103.169.34.149
-          username: ${{ secrets.DOCKER_USERNAME_HOST }}
-          password: ${{ secrets.DOCKER_PASSWORD_HOST }}
-          script: |
-            cd ~/projects/Toeic-Learning-Website
-            git pull origin main
-            docker compose down -v
-            docker compose up --build -d  
