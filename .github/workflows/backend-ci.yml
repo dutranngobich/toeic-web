@@ -13,7 +13,7 @@ on:
 permissions: write-all
 
 jobs:
-  build-and-test:
+  setup-and-test:
     name: Build and Test Backend
     runs-on: ubuntu-latest
 
