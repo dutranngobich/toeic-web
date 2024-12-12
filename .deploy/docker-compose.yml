@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  backend:
+    image: "tranngobichdu/toeic-learning-website-be:v1"
+    networks:
+      - toeic
+
+  frontend:
+    image: "tranngobichdu/toeic-learning-website:v1"
+    networks:
+      - toeic
+
+  api-gateway:
+    image: nginx:1.18
+    networks:
+      - toeic
+    ports:
+      - "10074:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: Dutran@2309
+    command: --lower_case_table_names=1
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - toeic
+    ports:
+      - "3306:3306"
+
+networks:
+  toeic: {}
